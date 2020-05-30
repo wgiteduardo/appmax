@@ -11,7 +11,7 @@
                 </ul>
             </div>
             <div class="card">
-                <div class="card-header bg-dark text-white">Relatório</div>
+                <div class="card-header bg-dark text-white">Produtos cadastrados</div>
 
                 <div class="card-body table-responsive">
                     <table class="table table-striped table-hover">
@@ -19,36 +19,41 @@
                             <tr>
                                 <th scope="col">SKU</th>
                                 <th scope="col">Nome do produto</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Quantidade</th>
-                                <th scope="col">Método</th>
-                                <th scope="col">Data</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Estoque</th>
+                                <th scope="col">Gerenciar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th scope="row">ABC-1234</th>
                                 <td>Fone de Ouvido</td>
-                                <td>Adição</td>
+                                <td>R$120,00</td>
                                 <td>10 un.</td>
-                                <td>API</td>
-                                <td>30/05/2020</td>
+                                <td>
+                                    <a href="{{ route('products.edit', 1) }}" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="{{ route('products.destroy', 1) }}" class="btn btn-danger btn-sm">Deletar</a>
+                                </td>
                             </tr>
                             <tr>
                                 <th scope="row">ABC-1234</th>
                                 <td>Fone de Ouvido</td>
-                                <td>Adição</td>
+                                <td>R$120,00</td>
                                 <td>10 un.</td>
-                                <td>API</td>
-                                <td>30/05/2020</td>
+                                <td>
+                                    <a href="{{ route('products.edit', 1) }}" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="{{ route('products.destroy', 1) }}" class="btn btn-danger btn-sm">Deletar</a>
+                                </td>
                             </tr>
                             <tr>
                                 <th scope="row">ABC-1234</th>
                                 <td>Fone de Ouvido</td>
-                                <td>Adição</td>
+                                <td>R$120,00</td>
                                 <td>10 un.</td>
-                                <td>API</td>
-                                <td>30/05/2020</td>
+                                <td>
+                                    <a href="{{ route('products.edit', 1) }}" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="{{ route('products.destroy', 1) }}" class="btn btn-danger btn-sm">Deletar</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
