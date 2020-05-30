@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @if(session()->has('success'))
                     <div class="alert alert-success" role="alert">
                         <strong>Sucesso!</strong> O estoque foi adicionado com sucesso ao produto.
@@ -14,9 +14,10 @@
                     </div>
                 @endif
                 <div class="card">
-                    <div class="card-header bg-dark text-white">Estoque do produto: {{ $product->title }}</div>
-                    <div class="col-md-12 text-center mt-3">
-                        <h3>Quantidade em estoque: {{ $product->stock }}</h3>
+                    <div class="card-header bg-dark text-white">Estoque</div>
+                    <div class="col-md-12 mt-3">
+                        <p>Produto: <strong>{{ $product->title }}</strong><br/>
+                        Quantidade em estoque: <strong>{{ $product->stock }}</strong></p>
                     </div>
                     <div class="card-body row">
                         <div class="col-md-6">
@@ -39,7 +40,7 @@
                                 @method('PATCH')
                                 @csrf
                                 <label for="inputStock">Digite a quantidade</label>
-                                <input type="text" id="inputStock" name="stock" class="form-control @error('stock') is-invalid @enderror" placeholder="Exemplo: 30" value="" required="" autofocus="">
+                                <input type="text" id="inputStock" name="stock" class="form-control @error('stock') is-invalid @enderror" placeholder="Exemplo: 15" value="" required="" autofocus="">
                                 @error('stock')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
