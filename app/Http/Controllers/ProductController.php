@@ -61,17 +61,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Product  $product
@@ -79,7 +68,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        if(!empty($product))
+            return view('products.edit')->with('product', $product);
     }
 
     /**
@@ -91,7 +81,28 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        if(!empty($product)) {
+            $request->validate([
+                'title' => ['required', 'max:191'],
+                'price' => ['required'],
+                'stock' => ['required']
+            ]);
+
+            if(Product::where([
+                ['sku', '=', $request->sku],
+                ['sku', '!=', $product->sku]
+            ])->count())
+                return redirect()->back()->withErrors(['sku' => 'Este código SKU já está sendo usado.']);
+
+            $product->sku = $request->sku;
+            $product->title = $request->title;
+            $product->price = $request->price;
+            $product->stock = $request->stock;
+
+            $product->save();
+
+            return redirect()->route('products.index')->with('success', true);
+        }
     }
 
     /**
