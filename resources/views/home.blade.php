@@ -14,9 +14,24 @@
             </div>
             <div class="card">
                 <div class="card-header bg-dark text-white">Relatório do dia</div>
-
                 <div class="card-body table-responsive">
-                    <table class="table table-striped table-hover">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-success text-white text-center">
+                                    Quantidade adicionada ao estoque: <strong>{{ $reports->where('type', 1)->sum('quantity') }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-danger text-white text-center">
+                                    Quantidade removida do estoque: <strong>{{ $reports->where('type', 2)->sum('quantity') }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover mt-3">
                         <thead>
                             <tr>
                                 <th scope="col">SKU</th>
@@ -29,14 +44,14 @@
                         </thead>
                         <tbody>
                             @foreach($reports as $report)
-                            <tr style="border-left: 5px solid {{ ($report->type == 1 ? '#38c172' : '#e3342f') }}">
-                                <th scope="row">{{ $report->product->sku }}</th>
-                                <td>{{ $report->product->title }}</td>
-                                <td>{{ ($report->type == 1 ? 'Adição' : 'Remoção') }}</td>
-                                <td>{{ $report->quantity }} un.</td>
-                                <td>{{ $report->method }}</td>
-                                <td>{{ $report->created_at->diffForHumans() }}</td>
-                            </tr>
+                                <tr style="border-left: 5px solid {{ ($report->type == 1 ? '#38c172' : '#e3342f') }}">
+                                    <th scope="row">{{ $report->product->sku }}</th>
+                                    <td>{{ $report->product->title }}</td>
+                                    <td>{{ ($report->type == 1 ? 'Adição' : 'Remoção') }}</td>
+                                    <td>{{ $report->quantity }} un.</td>
+                                    <td><strong>{{ $report->method }}</strong></td>
+                                    <td>{{ $report->created_at->diffForHumans() }}</td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
