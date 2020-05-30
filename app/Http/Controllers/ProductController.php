@@ -102,7 +102,7 @@ class ProductController extends Controller
 
             if(Product::where([
                 ['sku', '=', $request->sku],
-                ['sku', '!=',]
+                ['sku', '!=', $product->sku]
             ])->count())
                 return redirect()->back()->withErrors(['sku' => 'Este código SKU já está sendo usado.']);
 

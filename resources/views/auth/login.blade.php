@@ -6,9 +6,7 @@
             <form class="form-signin" method="POST" action="{{ route('login') }}">
                 @csrf
 
-                <img class="mb-4" src="https://i.imgur.com/Wr5c1Lj.png" alt="AppMax">
-                <h1 class="h3 mb-3 font-weight-normal">Por favor, faça login</h1>
-                
+                <img class="mb-2" src="https://i.imgur.com/Wr5c1Lj.png" alt="AppMax">
                 <label for="inputEmail" class="sr-only">Endereço de e-mail</label>
                 <input type="email" id="inputEmail" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Endereço de e-mail" required="" autofocus="">
                 @error('email')
