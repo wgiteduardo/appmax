@@ -26,7 +26,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item {{ (request()->is('home')) ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
+                            <a class="nav-link" href="{{ route('home') }}">Relatório</a>
                         </li>
                         <li class="nav-item {{ (request()->is('products*')) ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('products.index') }}">Produtos</a>
