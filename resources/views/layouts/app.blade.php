@@ -29,7 +29,7 @@
                             <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('products') }}">Produtos</a>
+                            <a class="nav-link" href="{{ route('products.index') }}">Produtos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Estoque</a>
