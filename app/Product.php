@@ -10,4 +10,9 @@ class Product extends Model
     protected $keyType = 'string';
 
     public $incrementing = false;
+
+    public function reports()
+    {
+        return $this->hasMany('App\Report');
+    }
 }

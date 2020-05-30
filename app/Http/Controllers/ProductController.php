@@ -15,11 +15,9 @@ class ProductController extends Controller
     public function index(Product $product)
     {
         $products = $product->latest()->paginate(10);
-        $stockBelow = $product->where('stock', '<', 100)->get();
 
         return view('products.index')->with([
-            'products' => $products,
-            'belowProducts' => $stockBelow
+            'products' => $products
         ]);
     }
 
@@ -161,7 +159,12 @@ class ProductController extends Controller
 
         if(!empty($product)) {
             $product->stock -= $request->stock;
-            $product->save();
+
+            if($product->stock > 0) {
+                $product->save();
+            } else {
+                return redirect()->back()->with('error', true);
+            }
 
             return redirect()->back()->with('removed', true);
         }

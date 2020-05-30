@@ -13,6 +13,11 @@
                         <strong>Sucesso!</strong> O estoque foi removido com sucesso do produto.
                     </div>
                 @endif
+                @if(session()->has('error'))
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Opsssss!</strong> Parece que você não pode remover essa quantidade do estoque.
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-header bg-dark text-white">Estoque</div>
                     <div class="col-md-12 mt-3">
