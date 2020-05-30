@@ -29,7 +29,7 @@
                         </thead>
                         <tbody>
                             @foreach($reports as $report)
-                            <tr>
+                            <tr style="border-left: 5px solid {{ ($report->type == 1 ? '#38c172' : '#e3342f') }}">
                                 <th scope="row">{{ $report->product->sku }}</th>
                                 <td>{{ $report->product->title }}</td>
                                 <td>{{ ($report->type == 1 ? 'Adição' : 'Remoção') }}</td>

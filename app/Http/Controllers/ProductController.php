@@ -159,7 +159,12 @@ class ProductController extends Controller
 
         if(!empty($product)) {
             $product->stock -= $request->stock;
-            $product->save();
+
+            if($product->stock > 0) {
+                $product->save();
+            } else {
+                return redirect()->back()->with('error', true);
+            }
 
             return redirect()->back()->with('removed', true);
         }
