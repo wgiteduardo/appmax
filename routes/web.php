@@ -23,6 +23,7 @@ Auth::routes([
     'verify' => false,
 ]);
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('products', 'ProductController');
+Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function() {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('products', 'ProductController');
+});

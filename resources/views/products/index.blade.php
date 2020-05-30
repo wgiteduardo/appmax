@@ -4,10 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="alert alert-primary" role="alert">
+            <div class="alert alert-danger" role="alert">
                 <strong>Atenção!</strong> Os seguintes produtos estão com menos de 100 unidades no estoque:
                 <ul>
-                    <li>Fone de Ouvido (SKU ABC-1234)</li>
+                    @foreach($belowProducts as $product)
+                        <li>{{ $product->title }} (SKU <strong>{{ $product->sku }}</strong>)</li>
+                    @endforeach
                 </ul>
             </div>
             <div class="card">
