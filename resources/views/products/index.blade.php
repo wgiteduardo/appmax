@@ -26,38 +26,21 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($products as $product)
                             <tr>
-                                <th scope="row">ABC-1234</th>
-                                <td>Fone de Ouvido</td>
-                                <td>R$120,00</td>
-                                <td>10 un.</td>
+                                <th scope="row">{{ $product->sku }}</th>
+                                <td>{{ $product->title }}</td>
+                                <td>R${{ $product->price }}</td>
+                                <td>{{ $product->stock }} un.</td>
                                 <td>
-                                    <a href="{{ route('products.edit', 1) }}" class="btn btn-primary btn-sm">Editar</a>
-                                    <a href="{{ route('products.destroy', 1) }}" class="btn btn-danger btn-sm">Deletar</a>
+                                    <a href="{{ route('products.edit', $product->sku) }}" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="{{ route('products.destroy', $product->sku) }}" class="btn btn-danger btn-sm">Deletar</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row">ABC-1234</th>
-                                <td>Fone de Ouvido</td>
-                                <td>R$120,00</td>
-                                <td>10 un.</td>
-                                <td>
-                                    <a href="{{ route('products.edit', 1) }}" class="btn btn-primary btn-sm">Editar</a>
-                                    <a href="{{ route('products.destroy', 1) }}" class="btn btn-danger btn-sm">Deletar</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">ABC-1234</th>
-                                <td>Fone de Ouvido</td>
-                                <td>R$120,00</td>
-                                <td>10 un.</td>
-                                <td>
-                                    <a href="{{ route('products.edit', 1) }}" class="btn btn-primary btn-sm">Editar</a>
-                                    <a href="{{ route('products.destroy', 1) }}" class="btn btn-danger btn-sm">Deletar</a>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
+                    {{ $products->links() }}
                 </div>
             </div>
         </div>
