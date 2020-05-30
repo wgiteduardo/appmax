@@ -18,7 +18,7 @@
                 @enderror
 
                 <label for="inputPassword" class="sr-only">Senha</label>
-                <input type="password" id="inputPassword" class="form-control @error('password') is-invalid @enderror" placeholder="Senha" required="">
+                <input type="password" id="inputPassword" class="form-control mt-2 @error('password') is-invalid @enderror" placeholder="Senha" required="">
                 @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -26,7 +26,6 @@
                 @enderror
 
                 <button class="btn btn-lg btn-dark btn-block mt-3" type="submit">Entrar</button>
-                <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
             </form>
         </div>
     </div>
