@@ -14,6 +14,7 @@
                 <div class="card-header bg-dark text-white">Produtos cadastrados</div>
 
                 <div class="card-body table-responsive">
+                    <a href="{{ route('products.create') }}" class="btn btn-block btn-success mb-3">Adicionar novo produto</a>
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
