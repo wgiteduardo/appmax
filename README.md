@@ -46,12 +46,6 @@ Você pode desfrutar da API do projeto enviando requisições para as urls abaix
 
 Lembrando que **product** deve ser o código SKU do produto. ***IMPORTANTE!*** Você deve enviar através do parametro `stock` na requisição a quantidade de produtos que deseja adicionar ou remover do estoque.
 
+## Agradecimentos
 
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Agradeço a oportunidade cedida pela AppMax de participar desse teste e a equipe do Laravel pelo framework incrível!
