@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Report;
+use App\Product;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -13,7 +15,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Report $report)
+    public function index(Report $report, Product $product)
     {
         $reports = $report->whereDate('created_at', Carbon::today())->paginate(20);
         $stockBelow = $product->where('stock', '<', 100)->get();
