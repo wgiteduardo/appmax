@@ -14,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/stock/add/{product}', 'Api\ProductController@add')->name('api.stock.add');
+Route::post('/stock/remove/{product}', 'Api\ProductController@remove')->name('api.stock.remove');

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Report;
+
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,9 +14,13 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Product $product)
     {
-        //
+        $products = $product->latest()->paginate(10);
+
+        return view('products.index')->with([
+            'products' => $products
+        ]);
     }
 
     /**
@@ -24,7 +30,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -35,7 +41,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'sku' => ['required', 'unique:products'],
+            'title' => ['required', 'max:191'],
+            'price' => ['required'],
+            'stock' => ['required']
+        ]);
+
+        $product = new Product;
+
+        $product->sku = $request->sku;
+        $product->title = $request->title;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+
+        $product->save();
+
+        return redirect()->route('products.index')->with('success', true);
     }
 
     /**
@@ -46,7 +68,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        if(!empty($product))
+            return view('products.show')->with('product', $product);
     }
 
     /**
@@ -57,7 +80,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        if(!empty($product))
+            return view('products.edit')->with('product', $product);
     }
 
     /**
@@ -69,17 +93,94 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        if(!empty($product)) {
+            $request->validate([
+                'title' => ['required', 'max:191'],
+                'price' => ['required'],
+                'stock' => ['required']
+            ]);
+
+            if(Product::where([
+                ['sku', '=', $request->sku],
+                ['sku', '!=', $product->sku]
+            ])->count())
+                return redirect()->back()->withErrors(['sku' => 'Este código SKU já está sendo usado.']);
+
+            $product->sku = $request->sku;
+            $product->title = $request->title;
+            $product->price = $request->price;
+            $product->stock = $request->stock;
+
+            $product->save();
+
+            return redirect()->route('products.index')->with('success', true);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)
     {
-        //
+        if(!empty($product))
+            $product->delete();
+
+        return redirect()->route('products.index')->with('deleted', true);
+    }
+
+    /**
+     * Adds a quantity to product stock
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function addStock(Request $request, Report $report, $sku) {
+        $product = Product::find($sku);
+
+        if(!empty($product)) {
+            $product->stock += $request->stock;
+            $product->save();
+
+            $report->product_sku = $product->sku;
+            $report->type = 1;
+            $report->method = 'website';
+            $report->quantity = $request->stock;
+            $report->save();
+
+            return redirect()->back()->with('success', true);
+        }
+    }
+
+    /**
+     * Removes a quantity from product stock
+     *
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function removeStock(Request $request, Report $report, $sku) {
+        $product = Product::find($sku);
+
+        if(!empty($product)) {
+            $product->stock -= $request->stock;
+
+            if($product->stock > 0) {
+                $product->save();
+            } else {
+                return redirect()->back()->with('error', true);
+            }
+
+            $report->product_sku = $product->sku;
+            $report->type = 2;
+            $report->method = 'website';
+            $report->quantity = $request->stock;
+            $report->save();
+
+            return redirect()->back()->with('removed', true);
+        }
     }
 }
