@@ -21,7 +21,7 @@ class CreateReportsTable extends Migration
             $table->string('method');
             $table->timestamps();
 
-            $table->foreign('product_sku')->references('sku')->on('products');
+            $table->foreign('product_sku')->references('sku')->on('products')->onDelete('cascade');
         });
     }
 
