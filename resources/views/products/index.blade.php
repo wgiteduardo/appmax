@@ -48,6 +48,7 @@
                                     <form action="{{ route('products.destroy', $product->sku) }}" method="post">
                                         @csrf
                                         @method('DELETE')
+                                        <a href="{{ route('products.show', $product->sku) }}" class="btn btn-success btn-sm">Estoque</a>
                                         <a href="{{ route('products.edit', $product->sku) }}" class="btn btn-primary btn-sm">Editar</a>
                                         <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
                                     </form>

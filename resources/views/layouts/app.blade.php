@@ -31,9 +31,6 @@
                         <li class="nav-item {{ (request()->is('products*')) ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('products.index') }}">Produtos</a>
                         </li>
-                        <li class="nav-item {{ (request()->is('stock*')) ? 'active' : '' }}">
-                            <a class="nav-link" href="#">Estoque</a>
-                        </li>
                     </ul>
                 </div>
             </nav>
