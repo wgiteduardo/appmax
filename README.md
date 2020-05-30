@@ -34,14 +34,14 @@ E então é só rodar o projeto utilizando `php artisan serve` ou acessar com Ap
 
 Para ter acesso a plataforma, você deverá realizar login na mesma. Para fazer isso utilize os dados que foram criados automaticamente pela seeder:
 
-> Email: admin@appmax.com.br
+> Email: admin@appmax.com.br  
 > Senha: appmax
 
 ## API
 
 Você pode desfrutar da API do projeto enviando requisições para as urls abaixo:
 
-> /stock/add/{product}
+> /stock/add/{product}  
 > /stock/remove/{product}
 
 Lembrando que **product** deve ser o código SKU do produto. ***IMPORTANTE!*** Você deve enviar através do parametro `stock` na requisição a quantidade de produtos que deseja adicionar ou remover do estoque.
