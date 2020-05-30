@@ -25,5 +25,8 @@ Auth::routes([
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('products', 'ProductController')->except('show');
+    Route::resource('products', 'ProductController');
+
+    Route::patch('/products/stock/add/{sku}', 'ProductController@addStock')->name('products.stock.add');;
+    Route::patch('/products/stock/remove/{sku}', 'ProductController@removeStock')->name('products.stock.remove');
 });

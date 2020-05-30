@@ -25,14 +25,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item active">
+                        <li class="nav-item {{ (request()->is('home')) ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ (request()->is('products*')) ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('products.index') }}">Produtos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Estoque</a>
                         </li>
                     </ul>
                 </div>

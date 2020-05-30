@@ -61,6 +61,18 @@ class ProductController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Product $product)
+    {
+        if(!empty($product))
+            return view('products.show')->with('product', $product);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Product  $product
@@ -108,6 +120,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
@@ -117,5 +130,40 @@ class ProductController extends Controller
             $product->delete();
 
         return redirect()->route('products.index')->with('deleted', true);
+    }
+
+    /**
+     * Adds a quantity to product stock
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function addStock(Request $request, $sku) {
+        $product = Product::find($sku);
+
+        if(!empty($product)) {
+            $product->stock += $request->stock;
+            $product->save();
+
+            return redirect()->back()->with('success', true);
+        }
+    }
+
+    /**
+     * Removes a quantity from product stock
+     *
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function removeStock(Request $request, $sku) {
+        $product = Product::find($sku);
+
+        if(!empty($product)) {
+            $product->stock -= $request->stock;
+            $product->save();
+
+            return redirect()->back()->with('removed', true);
+        }
     }
 }

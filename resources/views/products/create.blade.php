@@ -36,7 +36,7 @@
                                 @enderror
 
                                 <label for="inputStock">Quantidade em estoque</label>
-                                <input type="stock" id="inputStock" name="stock" class="form-control @error('stock') is-invalid @enderror" placeholder="Exemplo: 3" required="">
+                                <input type="number" id="inputStock" name="stock" class="form-control @error('stock') is-invalid @enderror" placeholder="Exemplo: 3" required="">
                                 @error('stock')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
