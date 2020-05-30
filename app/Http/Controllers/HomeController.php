@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function index(Report $report, Product $product)
     {
-        $reports = $report->whereDate('created_at', Carbon::today())->paginate(20);
+        $reports = $report->whereDate('created_at', Carbon::today())->latest()->paginate(20);
         $stockBelow = $product->where('stock', '<', 100)->get();
 
         return view('home')->with([

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Report;
+
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -137,12 +139,18 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function addStock(Request $request, $sku) {
+    public function addStock(Request $request, Report $report, $sku) {
         $product = Product::find($sku);
 
         if(!empty($product)) {
             $product->stock += $request->stock;
             $product->save();
+
+            $report->product_sku = $product->sku;
+            $report->type = 1;
+            $report->method = 'website';
+            $report->quantity = $request->stock;
+            $report->save();
 
             return redirect()->back()->with('success', true);
         }
@@ -154,7 +162,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function removeStock(Request $request, $sku) {
+    public function removeStock(Request $request, Report $report, $sku) {
         $product = Product::find($sku);
 
         if(!empty($product)) {
@@ -165,6 +173,12 @@ class ProductController extends Controller
             } else {
                 return redirect()->back()->with('error', true);
             }
+
+            $report->product_sku = $product->sku;
+            $report->type = 2;
+            $report->method = 'website';
+            $report->quantity = $request->stock;
+            $report->save();
 
             return redirect()->back()->with('removed', true);
         }
