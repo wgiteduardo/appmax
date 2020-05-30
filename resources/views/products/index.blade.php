@@ -4,12 +4,24 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="alert alert-primary" role="alert">
+            <div class="alert alert-danger" role="alert">
                 <strong>Atenção!</strong> Os seguintes produtos estão com menos de 100 unidades no estoque:
                 <ul>
-                    <li>Fone de Ouvido (SKU ABC-1234)</li>
+                    @foreach($belowProducts as $product)
+                        <li>{{ $product->title }} (SKU <strong>{{ $product->sku }}</strong>)</li>
+                    @endforeach
                 </ul>
             </div>
+            @if(session()->has('success'))
+                <div class="alert alert-success" role="alert">
+                    <strong>Sucesso!</strong> O produto foi cadastrado/alterado com sucesso.
+                </div>
+            @endif
+            @if(session()->has('deleted'))
+                <div class="alert alert-success" role="alert">
+                    <strong>Sucesso!</strong> O produto foi deletado com sucesso.
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header bg-dark text-white">Produtos cadastrados</div>
 
@@ -26,38 +38,25 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($products as $product)
                             <tr>
-                                <th scope="row">ABC-1234</th>
-                                <td>Fone de Ouvido</td>
-                                <td>R$120,00</td>
-                                <td>10 un.</td>
+                                <th scope="row">{{ $product->sku }}</th>
+                                <td>{{ $product->title }}</td>
+                                <td>R${{ $product->price }}</td>
+                                <td>{{ $product->stock }} un.</td>
                                 <td>
-                                    <a href="{{ route('products.edit', 1) }}" class="btn btn-primary btn-sm">Editar</a>
-                                    <a href="{{ route('products.destroy', 1) }}" class="btn btn-danger btn-sm">Deletar</a>
+                                    <form action="{{ route('products.destroy', $product->sku) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a href="{{ route('products.edit', $product->sku) }}" class="btn btn-primary btn-sm">Editar</a>
+                                        <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+                                    </form>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row">ABC-1234</th>
-                                <td>Fone de Ouvido</td>
-                                <td>R$120,00</td>
-                                <td>10 un.</td>
-                                <td>
-                                    <a href="{{ route('products.edit', 1) }}" class="btn btn-primary btn-sm">Editar</a>
-                                    <a href="{{ route('products.destroy', 1) }}" class="btn btn-danger btn-sm">Deletar</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">ABC-1234</th>
-                                <td>Fone de Ouvido</td>
-                                <td>R$120,00</td>
-                                <td>10 un.</td>
-                                <td>
-                                    <a href="{{ route('products.edit', 1) }}" class="btn btn-primary btn-sm">Editar</a>
-                                    <a href="{{ route('products.destroy', 1) }}" class="btn btn-danger btn-sm">Deletar</a>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
+                    {{ $products->links() }}
                 </div>
             </div>
         </div>

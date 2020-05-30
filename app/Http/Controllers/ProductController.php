@@ -12,9 +12,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Product $product)
     {
-        return view('products.index');
+        $products = $product->latest()->paginate(10);
+        $stockBelow = $product->where('stock', '<', 100)->get();
+
+        return view('products.index')->with([
+            'products' => $products,
+            'belowProducts' => $stockBelow
+        ]);
     }
 
     /**
@@ -24,7 +30,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -35,18 +41,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'sku' => ['required', 'unique:products'],
+            'title' => ['required', 'max:191'],
+            'price' => ['required'],
+            'stock' => ['required']
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
+        $product = new Product;
+
+        $product->sku = $request->sku;
+        $product->title = $request->title;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+
+        $product->save();
+
+        return redirect()->route('products.index')->with('success', true);
     }
 
     /**
@@ -57,7 +68,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        if(!empty($product))
+            return view('products.edit')->with('product', $product);
     }
 
     /**
@@ -69,7 +81,28 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        if(!empty($product)) {
+            $request->validate([
+                'title' => ['required', 'max:191'],
+                'price' => ['required'],
+                'stock' => ['required']
+            ]);
+
+            if(Product::where([
+                ['sku', '=', $request->sku],
+                ['sku', '!=', $product->sku]
+            ])->count())
+                return redirect()->back()->withErrors(['sku' => 'Este código SKU já está sendo usado.']);
+
+            $product->sku = $request->sku;
+            $product->title = $request->title;
+            $product->price = $request->price;
+            $product->stock = $request->stock;
+
+            $product->save();
+
+            return redirect()->route('products.index')->with('success', true);
+        }
     }
 
     /**
@@ -80,6 +113,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        if(!empty($product))
+            $product->delete();
+
+        return redirect()->route('products.index')->with('deleted', true);
     }
 }
