@@ -4,14 +4,16 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="alert alert-primary" role="alert">
+            <div class="alert alert-danger" role="alert">
                 <strong>Atenção!</strong> Os seguintes produtos estão com menos de 100 unidades no estoque:
                 <ul>
-                    <li>Fone de Ouvido (SKU ABC-1234)</li>
+                    @foreach($belowProducts as $product)
+                        <li>{{ $product->title }} (SKU <strong>{{ $product->sku }}</strong>)</li>
+                    @endforeach
                 </ul>
             </div>
             <div class="card">
-                <div class="card-header bg-dark text-white">Relatório</div>
+                <div class="card-header bg-dark text-white">Relatório do dia</div>
 
                 <div class="card-body table-responsive">
                     <table class="table table-striped table-hover">
@@ -26,32 +28,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($reports as $report)
                             <tr>
-                                <th scope="row">ABC-1234</th>
-                                <td>Fone de Ouvido</td>
-                                <td>Adição</td>
-                                <td>10 un.</td>
-                                <td>API</td>
-                                <td>30/05/2020</td>
+                                <th scope="row">{{ $report->product->sku }}</th>
+                                <td>{{ $report->product->title }}</td>
+                                <td>{{ ($report->type == 1 ? 'Adição' : 'Remoção') }}</td>
+                                <td>{{ $report->quantity }} un.</td>
+                                <td>{{ $report->method }}</td>
+                                <td>{{ $report->created_at->diffForHumans() }}</td>
                             </tr>
-                            <tr>
-                                <th scope="row">ABC-1234</th>
-                                <td>Fone de Ouvido</td>
-                                <td>Adição</td>
-                                <td>10 un.</td>
-                                <td>API</td>
-                                <td>30/05/2020</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">ABC-1234</th>
-                                <td>Fone de Ouvido</td>
-                                <td>Adição</td>
-                                <td>10 un.</td>
-                                <td>API</td>
-                                <td>30/05/2020</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
+                    {{ $reports->links() }}
                 </div>
             </div>
         </div>
