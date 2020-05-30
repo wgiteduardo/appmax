@@ -14,7 +14,7 @@ class ForeignKeyStatusReportsTable extends Migration
     public function up()
     {
         Schema::table('reports', function (Blueprint $table) {
-            $table->foreign('type')->references('id')->on('statuses');
+            $table->foreign('type')->references('id')->on('statuses')->onDelete('cascade');
         });
     }
 
@@ -25,6 +25,8 @@ class ForeignKeyStatusReportsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('reports', function (Blueprint $table) {
+            $table->dropForeign('reports_type_foreign');
+        });
     }
 }
