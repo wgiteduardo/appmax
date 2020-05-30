@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index(Product $product)
     {
-        $products = $product->paginate(10);
+        $products = $product->latest()->paginate(10);
         $stockBelow = $product->where('stock', '<', 100)->get();
 
         return view('products.index')->with([
@@ -30,7 +30,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -41,7 +41,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'sku' => ['required', 'unique:products'],
+            'title' => ['required', 'max:191'],
+            'price' => ['required'],
+            'stock' => ['required']
+        ]);
+
+        $product = new Product;
+
+        $product->sku = $request->sku;
+        $product->title = $request->title;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+
+        $product->save();
+
+        return redirect()->route('products.index')->with('success', true);
     }
 
     /**
@@ -86,6 +102,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        if(!empty($product))
+            $product->delete();
+
+        return redirect()->route('products.index')->with('deleted', true);
     }
 }

@@ -12,6 +12,16 @@
                     @endforeach
                 </ul>
             </div>
+            @if(session()->has('success'))
+                <div class="alert alert-success" role="alert">
+                    <strong>Sucesso!</strong> O produto foi cadastrado/alterado com sucesso.
+                </div>
+            @endif
+            @if(session()->has('deleted'))
+                <div class="alert alert-success" role="alert">
+                    <strong>Sucesso!</strong> O produto foi deletado com sucesso.
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header bg-dark text-white">Produtos cadastrados</div>
 
@@ -35,8 +45,12 @@
                                 <td>R${{ $product->price }}</td>
                                 <td>{{ $product->stock }} un.</td>
                                 <td>
-                                    <a href="{{ route('products.edit', $product->sku) }}" class="btn btn-primary btn-sm">Editar</a>
-                                    <a href="{{ route('products.destroy', $product->sku) }}" class="btn btn-danger btn-sm">Deletar</a>
+                                    <form action="{{ route('products.destroy', $product->sku) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a href="{{ route('products.edit', $product->sku) }}" class="btn btn-primary btn-sm">Editar</a>
+                                        <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
