@@ -10,6 +10,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'sku' => $faker->swiftBicNumber(),
         'title' => $faker->sentence(3),
         'price' => $faker->randomFloat(2, 0, 1000),
-        'stock' => $faker->numberBetween(0, 500)
+        'stock' => $faker->numberBetween(80, 300)
     ];
 });
