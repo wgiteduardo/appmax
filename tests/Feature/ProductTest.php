@@ -98,6 +98,29 @@ class ProductTest extends TestCase
     }
 
     /**
+     * Tests whether the user receives an error when give a repeated SKU
+     *
+     * @return void
+     */
+    public function test_user_receive_error_repeated_sku()
+    {
+        $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
+
+        $user = $this->createUser();
+
+        $firstProduct = factory('App\Product')->create();
+        $secondProduct = factory('App\Product')->create();
+
+        $productEdit = factory('App\Product')->make([
+            'sku' => $secondProduct->sku
+        ]);
+
+        $response = $this->actingAs($user)->patch("/products/{$firstProduct->sku}", $productEdit->toArray());
+
+        $response->assertSessionHasErrors('sku');
+    }
+
+    /**
      * Test if user can delete a product
      *
      * @return void
