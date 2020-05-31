@@ -59,7 +59,7 @@ class ProductController extends Controller
         if(!empty($product)) {
             $product->stock -= $request->stock;
 
-            if($product->stock > 0) {
+            if($product->stock >= 0) {
                 $product->save();
             } else {
                 return response()->json([
