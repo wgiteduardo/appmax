@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/stock/add/{product}', 'Api\ProductController@add')->name('api.stock.add');
-Route::post('/stock/remove/{product}', 'Api\ProductController@remove')->name('api.stock.remove');
+Route::post('/adicionar-produtos/{product}', 'Api\ProductController@add')->name('api.stock.add');
+Route::post('/baixar-produtos/{product}', 'Api\ProductController@remove')->name('api.stock.remove');

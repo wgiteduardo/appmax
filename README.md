@@ -41,8 +41,8 @@ Para ter acesso a plataforma, você deverá realizar login na mesma. Para fazer 
 
 Você pode desfrutar da API do projeto enviando requisições para as urls abaixo:
 
-> /stock/add/{product}  
-> /stock/remove/{product}
+> /api/adicionar-produtos/{product}  
+> /api/baixar-produtos/{product}
 
 Lembrando que **product** deve ser o código SKU do produto. ***IMPORTANTE!*** Você deve enviar através do parametro `stock` na requisição a quantidade de produtos que deseja adicionar ou remover do estoque.
 
