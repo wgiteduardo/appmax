@@ -26,7 +26,7 @@ class ProductController extends Controller
                 return response()->json([
                     'info' => 'error',
                     'result' => "Ops! Por favor informe a quantidade a ser adicionada no parâmetro stock."
-                ]);
+                ], 400);
             }
 
             $product->stock += $request->stock;
@@ -43,7 +43,7 @@ class ProductController extends Controller
             return response()->json([
                 'info' => 'error',
                 'result' => "Ops! O produto de código ${sku} não foi encontrado."
-            ]);
+            ], 404);
         }
     }
 
@@ -65,7 +65,7 @@ class ProductController extends Controller
                 return response()->json([
                     'info' => 'error',
                     'result' => "Ops! Você não pode remover esta quantidade do estoque do produto."
-                ]);
+                ], 400);
             }
 
             $report->product_sku = $product->sku;
@@ -75,6 +75,11 @@ class ProductController extends Controller
             $report->save();
 
             return response()->json($product);
+        } else {
+            return response()->json([
+                'info' => 'error',
+                'result' => "Ops! O produto de código ${sku} não foi encontrado."
+            ], 404);
         }
     }
 }
