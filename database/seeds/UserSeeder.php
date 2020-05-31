@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Administrador',
             'email' => 'admin@appmax.com.br',
-            'password' => Hash::make('appmax'),
+            'password' => Hash::make('appmax')
         ]);
     }
 }
